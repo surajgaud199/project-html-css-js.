@@ -1,78 +1,37 @@
-Shery.imageEffect("#back",{style: 5, config:{
-    a: {value: 1.49,range:[0,30]},
-    b: {value: -0.98,range:[-1,1]},
-    aspect: {value: 1.8822947576656774},
-    gooey: {value: true},
-    infiniteGooey:{value:true},
-    durationOut:{value:1, range:[0.1 ,5] },
-    durationIn:{value:1,range:[0.1,5] },
-    displaceAmount:{value:0.5},
-    masker:{value:true},
-    maskval:{value:1.33,range:[1,5] },
-    scrollType:{value:0},
-    geoVertex:{range:[1,64],value:1 },
-    noEffectGooey:{value:false },
-    onMouse:{value: 1},
-    noise_speed: {value: 1.59, range:[0 , 10] },
-    metaball:{value:0.21,range:[0,2] },
-    discard_threshold:{value:0.5,range:[0,1] },
-    antialias_threshold:{value:0,range:[0,0.1] },
-    noise_height:{value:0.47,range:[0,2] },
-    noise_scale:{value:12.15,range:[0,100] },
-  },  gooey: true,
-});
+const containerEl = document.querySelector(".container")
 
-var elems = document.querySelectorAll(".elem");
+for (let index = 0; index < 30; index++) {
+    const colorcontainerEl = document.createElement("div")
+    colorcontainerEl.classList.add
+    ("color-container");
+    containerEl.appendChild(colorcontainerEl);
+    
+}
 
-elems.forEach(function(elem){
-    var h1s = elem.querySelectorAll("h1");
-    var index = 0;
-    var animating = false;
+const colorContainerEls = document.querySelectorAll(".color-container");
 
-document.querySelector("#main")
-.addEventListener("click",function(){
-   if(!animating){
-       animating = true;
-    gsap.to(h1s[index],{
-        top: "-=100%",
-        ease:Expo.easeInOut,
-        duration: 1,
-        onComplete: function(){
-            gsap.set(this._targets[0],{top: "100%"});
-            animating = false;
-        },
+generateColors();
+
+function generateColors(){
+    colorContainerEls.forEach( 
+        (colorContainerEl) => {
+        const newColorCode = randomColor();
+        colorContainerEl.style.
+        backgroundColor = "#" + newColorCode; 
+        colorContainerEl.innerText = "#" +
+        newColorCode;
     });
+    
+}
 
-    index === h1s.length-1 ? (index = 0) : index++; 
-
-    gsap.to(h1s[index],{
-        top: "-=100%",
-        ease:Expo.easeInOut,
-        duration: 1,
-    });
-   }
-});
-})
-
-
-// var h1s = document.querySelectorAll("h1");
-// var index = 0;
-// document.querySelector("#main")
-// .addEventListener("click",function(){
-//     gsap.to(h1s[index],{
-//         top: "-=100%",
-//         ease:Expo.easeInOut,
-//         duration: 1,
-//         onComplete: function(){
-//             gsap.set(this._targets[0],{top: "100%"});
-//         },
-//     });
-
-//     index === h1s.length -1 ? (index = 0) : index++; 
-
-//     gsap.to(h1s[index],{
-//         top: "-=100%",
-//         ease:Expo.easeInOut,
-//         duration: 1,
-//     });
-// });
+function randomColor(){
+    const chars = "0123456789abcdf";
+    const colorCodeLength = 6;
+    let colorCode = "";
+    for (let index = 0; index < colorCodeLength; index++) {
+        const randomNum = Math.floor(Math.random()*chars.length);
+        colorCode += chars.substring(randomNum,randomNum + 1);
+       
+    }
+    return colorCode;
+}
