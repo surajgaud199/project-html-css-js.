@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Interval calculetar</title>
+</head>
+<body>
+    <h2>Date Interval Calculator</h2>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate">
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate">
+
+    <br><br>
+
+    <button onclick="calculateInterval()">Calculate Interval</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateInterval() {
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+
+            if (startDate && endDate) {
+                const timeDiff = endDate.getTime() - startDate.getTime();
+
+                const diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+                const diffWeeks = Math.floor(diffDays / 7);
+
+                const startMonth = startDate.getMonth();
+                const endMonth = endDate.getMonth();
+                const diffMonths = (endMonth - startMonth) + (12 * (endDate.getFullYear() - startDate.getFullYear()));
+
+                const diffYears = endDate.getFullYear() - startDate.getFullYear();
+
+                const result = `
+          <p>The interval between the dates:</p>
+          <ul>
+            <li>Days: ${diffDays} days</li>
+            <li>Weeks: ${diffWeeks} weeks</li>
+            <li>Months: ${diffMonths} months</li>
+            <li>Years: ${diffYears} years</li>
+          </ul>
+        `;
+
+                document.getElementById('result').innerHTML = result;
+            } else {
+                document.getElementById('result').innerHTML = "Please select both start and end dates.";
+            }
+        }
+    </script>
+</body>
+</html>
